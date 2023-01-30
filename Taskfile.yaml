@@ -70,7 +70,7 @@ tasks:
   remove:
     desc: "Remove package"
     cmds:
-      - rm -r _tpm/{{.CLI_ARGS}
+      - rm -r _tpm/{{.CLI_ARGS}}
       - echo "{{.CLI_ARGS}} package successfully removed"
     preconditions:
       - sh: "[ -d _tpm/{{.PACKAGE_NAME}}  ]"
