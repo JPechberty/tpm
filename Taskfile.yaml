@@ -87,8 +87,8 @@ tasks:
 
   ## === 📦 PACKAGES ==================================================
 
-  install-docker-package:
-    desc: "Install docker package"
+  install-docker-compose-package:
+    desc: "Install docker-compose package"
     internal: true
     cmds:
       - task: create-package-dir
