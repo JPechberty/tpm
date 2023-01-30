@@ -45,7 +45,7 @@ tasks:
   update:
     desc: "Update TPM"
     cmds:
-      - curl -fsS {{.REPOSITORY}}/{{.ENV}}/Taskfile.yaml > ./_tpm/Taskfile.yaml
+      - curl -fsS {{.REPOSITORY}}/{{.ENV}}/Taskfile.yaml > Taskfile.yaml
       - task: help
 
   ## === ⚙️ INTERFACES ================================================
