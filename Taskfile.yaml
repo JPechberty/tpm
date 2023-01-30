@@ -4,7 +4,6 @@ silent: true
 ##
 ## === ⚒️ Variables ====================================================
 ##
-
 vars:
   #
   # TASKFILE
@@ -16,6 +15,13 @@ vars:
   # SYSTEM
   PWD: $PWD
   #
+##
+## === ⚒️ Includes ====================================================
+##
+includes:
+  dc:
+    taskfile: ./_tpm/docker-compose/Taskfile.yaml
+    optional: true
 ##
 ## === ✅ TASKS ========================================================
 ##
@@ -39,7 +45,9 @@ tasks:
   update:
     desc: "Update TPM"
     cmds:
-      - echo "Coucou from tpm:update"
+      - curl -fsS {{.REPOSITORY}}/{{.ENV}}/Taskfile.yaml > ./_tpm/Taskfile.yaml
+      - task: help
+
   ## === ⚙️ INTERFACES ================================================
 
   list:
@@ -53,21 +61,21 @@ tasks:
   require:
     desc: "Install package"
     cmds:
-      - echo "Coucou from tpm:require"
+      - echo "Coucou from tpm:require / package souhaité - {{CLI_ARGS}}"
 
   remove:
     desc: "Remove package"
     cmds:
-      - echo "Coucou from tpm:remove"
+      - echo "Coucou from tpm:remove / package souhaité - {{CLI_ARGS}"
 
-  create-dir:
+  create-package-dir:
     desc: "Create package dir"
     internal: true
     cmds:
-      - mkdir _tpm/
+      - mkdir -p _tpm/{{.PACKAGE_NAME}}
     preconditions:
-      - sh: "[ ! -d _tpm  ]"
-        msg: "_tpm directory already exists"
+      - sh: "[ ! -d _tpm/{{.PACKAGE_NAME}}  ]"
+        msg: "{{.PACKAGE_NAME}} directory already exists"
 
   ## === 📦 PACKAGES ==================================================
 
@@ -78,4 +86,4 @@ tasks:
       - task: create-package-dir
         vars:
           PACKAGE_NAME: docker
-      - curl -fsS https://raw.githubusercontent.com/JPechberty/docker-compose-generator/develop/Taskfile.yaml > ./libs/docker/Taskfile.yaml
+      - curl -fsS https://raw.githubusercontent.com/JPechberty/docker-compose-generator/develop/Taskfile.yaml > ./_tpm/docker/Taskfile.yaml
