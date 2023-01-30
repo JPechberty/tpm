@@ -61,7 +61,7 @@ tasks:
   require:
     desc: "Install package"
     cmds:
-      - task: install-{{.CLI_ARGS}}-package"
+      - task: install-{{.CLI_ARGS}}-package
       - echo "{{.CLI_ARGS}} package successfully installed"
     preconditions:
       - sh: "[ ! -d _tpm/{{.PACKAGE_NAME}}  ]"
