@@ -61,12 +61,12 @@ tasks:
   require:
     desc: "Install package"
     cmds:
-      - echo "Coucou from tpm:require / package souhaité - {{CLI_ARGS}}"
+      - echo "Coucou from tpm:require / package souhaité - {{.CLI_ARGS}}"
 
   remove:
     desc: "Remove package"
     cmds:
-      - echo "Coucou from tpm:remove / package souhaité - {{CLI_ARGS}"
+      - echo "Coucou from tpm:remove / package souhaité - {{.CLI_ARGS}"
 
   create-package-dir:
     desc: "Create package dir"
