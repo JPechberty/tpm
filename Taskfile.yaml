@@ -1,0 +1,81 @@
+version: '3'
+silent: true
+
+##
+## === ⚒️ Variables ====================================================
+##
+
+vars:
+  #
+  # TASKFILE
+  VERSION: 1.0.0
+  CONTRIBUTOR: "Benoit Foujols, Julien Pechberty"
+  ENV: develop
+  REPOSITORY: https://raw.githubusercontent.com/JPechberty/tpm
+  #
+  # SYSTEM
+  PWD: $PWD
+  #
+##
+## === ✅ TASKS ========================================================
+##
+tasks:
+  default:
+    cmds:
+      - task: help
+
+  ## === 🆘 HELP ======================================================
+
+  help:
+    desc: "Description des tâches disponibles"
+    cmds:
+      - echo "Bienvenu dans TPM (Tasks Packages Manager)"
+      - echo "Voici la description de votre systeme:"
+      - echo 'Votre systeme "{{OS}}"'
+      - echo 'Votre architecture "{{ARCH}}"'
+      - echo "----------------------------------------------"
+      - task --list
+
+  update:
+    desc: "Update TPM"
+    cmds:
+      - echo "Coucou from tpm:update"
+  ## === ⚙️ INTERFACES ================================================
+
+  list:
+    desc: "Show packages list"
+    cmds:
+      - echo "Listes des packages disponibles"
+      - echo "docker - Docker generator"
+      - echo "Pour installer un package, éxécuter la commande suivante :"
+      - echo "task tpm:require -- 'nom_du_package'"
+
+  require:
+    desc: "Install package"
+    cmds:
+      - echo "Coucou from tpm:require"
+
+  remove:
+    desc: "Remove package"
+    cmds:
+      - echo "Coucou from tpm:remove"
+
+  create-dir:
+    desc: "Create package dir"
+    internal: true
+    cmds:
+      - mkdir _tpm/
+    preconditions:
+      - sh: "[ ! -d _tpm  ]"
+        msg: "_tpm directory already exists"
+
+  ## === 📦 PACKAGES ==================================================
+
+  install-docker-package:
+    desc: "Install docker package"
+    internal: true
+    cmds:
+      - task: create-package-dir
+        vars:
+          PACKAGE_NAME: docker
+      - curl -fsS https://raw.githubusercontent.com/JPechberty/docker-compose-generator/develop/Taskfile.yaml > ./libs/docker/Taskfile.yaml
