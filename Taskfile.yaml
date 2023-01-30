@@ -54,7 +54,7 @@ tasks:
     desc: "Show packages list"
     cmds:
       - echo "Listes des packages disponibles"
-      - echo "docker - Docker generator"
+      - echo "docker-compose - Docker-compose file generator"
       - echo "Pour installer un package, éxécuter la commande suivante :"
       - echo "task tpm:require -- 'nom_du_package'"
 
@@ -70,7 +70,7 @@ tasks:
   remove:
     desc: "Remove package"
     cmds:
-      - rm -r _tpm/{{.CLI_ARGS}"
+      - rm -r _tpm/{{.CLI_ARGS}
       - echo "{{.CLI_ARGS}} package successfully removed"
     preconditions:
       - sh: "[ -d _tpm/{{.PACKAGE_NAME}}  ]"
@@ -93,5 +93,5 @@ tasks:
     cmds:
       - task: create-package-dir
         vars:
-          PACKAGE_NAME: docker
-      - curl -fsS https://raw.githubusercontent.com/JPechberty/docker-compose-generator/develop/Taskfile.yaml > ./_tpm/docker/Taskfile.yaml
+          PACKAGE_NAME: docker-compose
+      - curl -fsS https://raw.githubusercontent.com/JPechberty/docker-compose-generator/develop/Taskfile.yaml > ./_tpm/docker-compose/Taskfile.yaml
