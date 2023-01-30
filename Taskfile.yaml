@@ -22,6 +22,9 @@ includes:
   dc:
     taskfile: ./_tpm/docker-compose/Taskfile.yaml
     optional: true
+  sf:
+    taskfile: ./_tpm/symfony/Taskfile.yaml
+    optional: true
 ##
 ## === ✅ TASKS ========================================================
 ##
@@ -55,6 +58,7 @@ tasks:
     cmds:
       - echo "Listes des packages disponibles"
       - echo "docker-compose - Docker-compose file generator"
+      - echo "symfony - Commandes de bases symfony 6"
       - echo "Pour installer un package, éxécuter la commande suivante :"
       - echo "task tpm:require -- 'nom_du_package'"
 
@@ -94,4 +98,13 @@ tasks:
       - task: create-package-dir
         vars:
           PACKAGE_NAME: docker-compose
-      - curl -fsS https://raw.githubusercontent.com/JPechberty/docker-compose-generator/develop/Taskfile.yaml > ./_tpm/docker-compose/Taskfile.yaml
+      - curl -fsS https://raw.githubusercontent.com/JPechberty/tpm-docker-compose/develop/Taskfile.yaml > ./_tpm/docker-compose/Taskfile.yaml
+
+  install-symfony-package:
+    desc: "Install symfony package"
+    internal: true
+    cmds:
+      - task: create-package-dir
+        vars:
+          PACKAGE_NAME: symfony
+      - curl -fsS https://raw.githubusercontent.com/JPechberty/tpm-symfony/develop/Taskfile.yaml > ./_tpm/symfony/Taskfile.yaml
