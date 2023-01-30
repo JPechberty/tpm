@@ -11,6 +11,8 @@ vars:
   CONTRIBUTOR: "Benoit Foujols, Julien Pechberty"
   ENV: develop
   REPOSITORY: https://raw.githubusercontent.com/JPechberty/tpm
+  DC_PKG_REPOSITORY: https://raw.githubusercontent.com/JPechberty/tpm-docker-compose/develop
+  SF_PKG_REPOSITORY: https://raw.githubusercontent.com/JPechberty/tpm-symfony/develop
   #
   # SYSTEM
   PWD: $PWD
@@ -45,6 +47,7 @@ tasks:
       - echo "----------------------------------------------"
       - task --list
 
+  #TODO: Ajouter un header No-cache à la requete curl update
   update:
     desc: "Update TPM"
     cmds:
@@ -68,8 +71,8 @@ tasks:
       - task: install-{{.CLI_ARGS}}-package
       - echo "{{.CLI_ARGS}} package successfully installed"
     preconditions:
-      - sh: "[ ! -d _tpm/{{.PACKAGE_NAME}}  ]"
-        msg: "{{.PACKAGE_NAME}} directory already exists"
+      - sh: "[ ! -d _tpm/{{.CLI_ARGS}}  ]"
+        msg: "{{.CLI_ARGS}} package already installed"
 
   remove:
     desc: "Remove package"
@@ -77,8 +80,8 @@ tasks:
       - rm -r _tpm/{{.CLI_ARGS}}
       - echo "{{.CLI_ARGS}} package successfully removed"
     preconditions:
-      - sh: "[ -d _tpm/{{.PACKAGE_NAME}}  ]"
-        msg: "{{.PACKAGE_NAME}} does not exists"
+      - sh: "[ -d _tpm/{{.CLI_ARGS}}  ]"
+        msg: "{{.CLI_ARGS}} is not already installed"
 
   create-package-dir:
     desc: "Create package dir"
@@ -98,7 +101,8 @@ tasks:
       - task: create-package-dir
         vars:
           PACKAGE_NAME: docker-compose
-      - curl -fsS https://raw.githubusercontent.com/JPechberty/tpm-docker-compose/develop/Taskfile.yaml > ./_tpm/docker-compose/Taskfile.yaml
+      - curl -fsS {{.DC_PKG_REPOSITORY}}/Taskfile.yaml > ./_tpm/docker-compose/Taskfile.yaml
+  #TODO: Ajouter un header No-cache à la requete curl docker
 
   install-symfony-package:
     desc: "Install symfony package"
@@ -107,4 +111,5 @@ tasks:
       - task: create-package-dir
         vars:
           PACKAGE_NAME: symfony
-      - curl -fsS https://raw.githubusercontent.com/JPechberty/tpm-symfony/develop/Taskfile.yaml > ./_tpm/symfony/Taskfile.yaml
+      - curl -fsS {{.SF_PKG_REPOSITORY}}/Taskfile.yaml > ./_tpm/symfony/Taskfile.yaml
+  #TODO: Ajouter un header No-cache à la requete curl symfony
