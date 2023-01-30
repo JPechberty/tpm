@@ -61,12 +61,20 @@ tasks:
   require:
     desc: "Install package"
     cmds:
-      - echo "Coucou from tpm:require / package souhaité - {{.CLI_ARGS}}"
+      - task: install-{{.CLI_ARGS}}-package"
+      - echo "{{.CLI_ARGS}} package successfully installed"
+    preconditions:
+      - sh: "[ ! -d _tpm/{{.PACKAGE_NAME}}  ]"
+        msg: "{{.PACKAGE_NAME}} directory already exists"
 
   remove:
     desc: "Remove package"
     cmds:
-      - echo "Coucou from tpm:remove / package souhaité - {{.CLI_ARGS}"
+      - rm -r _tpm/{{.CLI_ARGS}"
+      - echo "{{.CLI_ARGS}} package successfully removed"
+    preconditions:
+      - sh: "[ -d _tpm/{{.PACKAGE_NAME}}  ]"
+        msg: "{{.PACKAGE_NAME}} does not exists"
 
   create-package-dir:
     desc: "Create package dir"
